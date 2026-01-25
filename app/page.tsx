@@ -47,18 +47,6 @@ const todayProducts: Product[] = [
     };
   })(),
   (() => {
-    const { url, title } = getProductImageAndTitle('대게/홍게', '4', undefined, 4); // 대방어 통마리 1마리
-    return {
-      id: '4',
-      name: title,
-      originalPrice: 200000,
-      salePrice: 130000,
-      discountPercent: 35,
-      category: '대게/홍게',
-      imageUrl: url,
-    };
-  })(),
-  (() => {
     const { url, title } = getProductImageAndTitle('수산물', '5', undefined, 7); // 통영생굴 깐굴 매생이 세트
     return {
       id: '5',

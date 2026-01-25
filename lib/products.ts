@@ -1,4 +1,4 @@
-import { getProductImageUrl } from './imageUtils';
+import { getProductImageAndTitleByIndex } from './imageUtils';
 
 export interface Product {
   id: string;
@@ -21,92 +21,69 @@ function calculateDiscount(original: number, sale: number): number {
   return Math.round(((original - sale) / original) * 100);
 }
 
-// 카테고리별 상품명 템플릿
-const productTemplates: Record<string, string[]> = {
-  '구룡포과메기': [
-    '구룡포 전통 과메기', '구룡포 프리미엄 과메기', '구룡포 특선 과메기', '구룡포 명품 과메기',
-    '구룡포 고급 과메기', '구룡포 손질 과메기', '구룡포 자연 건조 과메기', '구룡포 전통 방식 과메기',
-    '구룡포 특등급 과메기', '구룡포 한정 과메기', '구룡포 신선 과메기', '구룡포 정선 과메기',
-    '구룡포 최상급 과메기', '구룡포 선별 과메기', '구룡포 프리미엄 선물용 과메기', '구룡포 가정용 과메기',
-    '구룡포 대용량 과메기', '구룡포 소포장 과메기'
-  ],
-  '겨울세일품목': [
-    '겨울 특가 대게', '겨울 한정 홍게', '겨울 특가 전복', '겨울 시즌 한치',
-    '겨울 할인 새우', '겨울 특선 오징어', '겨울 한정 문어', '겨울 특가 조개',
-    '겨울 시즌 굴', '겨울 특가 멍게', '겨울 한정 해삼', '겨울 특선 전복',
-    '겨울 할인 대게 세트', '겨울 특가 홍게 세트', '겨울 한정 수산물 세트', '겨울 특선 선물세트',
-    '겨울 시즌 프리미엄 세트', '겨울 특가 가정용 세트'
-  ],
-  '대게/홍게': [
-    '러시아 대게', '홍게 다리만', '대게 통마리',
-    '홍게 통마리', '대게 다리', '홍게 몸통',
-    '대게 세트', '홍게 세트', '대게 특대',
-    '홍게 특대', '대게 프리미엄', '홍게 프리미엄',
-    '대게 한정', '홍게 한정', '대게 고급',
-    '홍게 고급', '대게 특선', '홍게 특선'
-  ],
-  '수산물': [
-    '국내산 손질 새조개', '완도 왕바지락', '통영생굴(깐굴)', '남해안 대왕 새꼬막',
-    '제주 전복', '울진 대게', '거제 홍합', '부산 활 새우',
-    '여수 석화', '목포 멍게', '포항 꼬막', '통영 전복',
-    '완도 전복', '제주 해삼', '부산 굴', '여수 굴',
-    '목포 조개', '거제 전복'
-  ],
-  '활어회/물회/막회': [
-    '자연산 쥐치회', '최상급 횟감 생물한치', '대방어 회', '물회 세트',
-    '막회 세트', '활 광어회', '활 우럭회', '활 농어회',
-    '활 도다리회', '활 병어회', '활 감성돔회', '활 참돔회',
-    '활 벵에돔회', '활 전복회', '활 해삼회', '활 문어회',
-    '활 오징어회', '활 새우회'
-  ],
-  '건어물': [
-    '국내산 말린 오징어', '전통 방식 건조 멸치', '고급 건조 새우', '말린 전복',
-    '건조 해삼', '말린 문어', '건조 오징어 다리', '전통 건조 멸치',
-    '고급 건조 새우', '말린 조개', '건조 전복', '말린 해삼',
-    '건조 문어', '전통 멸치', '고급 새우', '말린 오징어',
-    '건조 전복', '말린 해삼'
-  ],
-  '문어/낙지/쭈꾸미': [
-    '국내산 특대 갑오징어', '활 문어', '낙지', '쭈꾸미',
-    '문어 다리', '낙지 다리', '쭈꾸미 다리', '활 문어 통마리',
-    '낙지 통마리', '쭈꾸미 통마리', '문어 회', '낙지 회',
-    '쭈꾸미 볶음용', '문어 볶음용', '낙지 볶음용', '쭈꾸미 볶음용',
-    '문어 세트', '낙지 세트'
-  ],
-  '명절 선물세트': [
-    '명절 프리미엄 선물세트 A', '명절 특선 선물세트 B', '명절 고급 선물세트 C',
-    '명절 프리미엄 세트', '명절 특선 세트', '명절 고급 세트',
-    '명절 가정용 세트', '명절 대용량 세트', '명절 소포장 세트',
-    '명절 한정 세트', '명절 시즌 세트', '명절 특가 세트',
-    '명절 할인 세트', '명절 프리미엄 패키지', '명절 특선 패키지',
-    '명절 고급 패키지', '명절 가정용 패키지', '명절 대용량 패키지'
-  ],
-  '제철농산물': [
-    '제철 감자', '제철 고구마', '제철 양파', '제철 당근',
-    '제철 배추', '제철 무', '제철 상추', '제철 시금치',
-    '제철 부추', '제철 파', '제철 마늘', '제철 생강',
-    '제철 고추', '제철 피망', '제철 오이', '제철 토마토',
-    '제철 가지', '제철 호박'
-  ],
-  '한우/한돈': [
-    '한우 등심', '한돈 삼겹살', '한우 갈비살', '한우 안심',
-    '한돈 목살', '한우 채끝살', '한돈 갈비', '한우 꽃등심',
-    '한돈 앞다리살', '한우 우둔', '한돈 뒷다리살', '한우 사태',
-    '한돈 갈매기살', '한우 치마살', '한돈 항정살', '한우 부채살',
-    '한돈 가브리살', '한우 꽃갈비'
-  ],
+// 카테고리별 이미지 인덱스 범위 (hepungImages 배열에서 사용할 인덱스들)
+// 각 카테고리에 적합한 이미지 인덱스를 배열로 정의
+const categoryImageIndices: Record<string, number[]> = {
+  '겨울세일품목': [0, 1, 2, 4, 5, 6, 7, 9, 12, 13, 14, 15, 16, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 32, 40, 41, 48, 49, 50, 51, 52, 53, 57, 58, 59, 68, 73], // 다양한 수산물 (회, 건어물, 문어/오징어 제외)
+  '대게/홍게': [0, 4, 33], // 홍게 다리(0), 대방어(4), 게장세트(33)
+  '수산물': [1, 2, 5, 6, 7, 9, 12, 13, 14, 15, 16, 19, 20, 21, 23, 24, 25, 26, 27, 28, 29, 32, 40, 41, 48, 49, 50, 51, 52, 53, 57, 58, 59, 73], // 일반 수산물: 새조개(1), 바지락(2), 갈치(5), 새꼬막(6), 굴(7), 홍가리비(9), 전복(12,13,14), 피홍합(15), 물미역(16), 갈치(19), 게장(20), 과메기(21), 추어탕(23,24), 전복(25,26,27), 새우(28), 물미역(29), 갈치(32), 밥식해(40), 된장콩잎(41), 새우(48), 전복(49), 새우(50), 참치(51), 추어탕(52,53), 전복(57,58), 장어(59), 홍어(73)
+  '활어회/물회/막회': [3, 8, 11, 54, 59, 60, 67, 70, 71], // 쥐치회(3), 멸치회(8), 병어(11), 백고동(54), 고동회(59), 물회육수(60), 포항물회(67), 물가자미회(70,71)
+  '건어물': [35, 37, 38, 42, 43, 44, 45, 46, 47, 61, 62, 64, 65, 66, 72], // 갈치포(35), 멸치(37,38), 한치(42), 굴비(43,44), 민어(45), 대구알포(46), 오징어구이(47), 아귀포(61), 마른오징어(62), 오징어구이(64), 오징어 피데기(65), 아귀포(66), 아귀채(72)
+  '문어/낙지/쭈꾸미': [17, 18, 22, 30, 31, 36, 39, 55, 56, 64, 65], // 손질 문어(17), 활 문어(18), 손질오징어(22), 손질 문어(30), 활 문어(31), 마른오징어(36), 오징어채(39), 오징어 백진미(55), 오징어 피데기(56), 오징어구이(64), 오징어 피데기(65)
+  '명절 선물세트': [32, 33, 48, 63, 68, 69, 73], // 게장세트(32), 과메기세트(33), 전복세트(48), 생선세트(63), 꿀(68), 곶감세트(69), 김선물세트(73)
 };
 
 // 카테고리별 상품 생성 함수
 function generateProducts(category: string, count: number): Product[] {
-  const templates = productTemplates[category] || [];
+  const availableIndices = categoryImageIndices[category] || [];
   const products: Product[] = [];
+  const usedUrls = new Set<string>(); // 중복 방지를 위한 Set
   
-  for (let i = 0; i < count; i++) {
-    const templateIndex = i % templates.length;
-    const baseName = templates[templateIndex];
-    const weight = ['200g', '300g', '500g', '1kg', '2kg', '3kg', '5kg'][Math.floor(Math.random() * 7)];
-    const name = `${baseName} ${weight}`;
+  // 사용 가능한 인덱스가 없으면 전체 이미지 배열에서 선택
+  const allIndices = availableIndices.length > 0 
+    ? availableIndices 
+    : Array.from({ length: 75 }, (_, i) => i); // hepungImages 배열 길이 (쪽갈비, 미니족발, 중복 전복 제거 후)
+  
+  // 사용 가능한 고유 이미지 수 계산
+  const uniqueUrls = new Set<string>();
+  allIndices.forEach(index => {
+    const { url } = getProductImageAndTitleByIndex(index);
+    uniqueUrls.add(url);
+  });
+  const maxUniqueProducts = uniqueUrls.size;
+  
+  // 생성 개수를 사용 가능한 고유 이미지 수로 제한
+  const actualCount = Math.min(count, maxUniqueProducts);
+  
+  // 인덱스를 섞어서 랜덤하게 사용
+  const shuffledIndices = [...allIndices].sort(() => Math.random() - 0.5);
+  
+  let indexPointer = 0;
+  for (let i = 0; i < actualCount; i++) {
+    // 중복되지 않은 이미지를 찾을 때까지 반복
+    let attempts = 0;
+    let imageIndex: number;
+    let url: string;
+    let title: string;
+    
+    do {
+      // 카테고리에 맞는 이미지 인덱스 선택 (순환 사용)
+      imageIndex = shuffledIndices[indexPointer % shuffledIndices.length];
+      indexPointer++;
+      
+      // 이미지와 타이틀 가져오기
+      const imageData = getProductImageAndTitleByIndex(imageIndex);
+      url = imageData.url;
+      title = imageData.title;
+      
+      attempts++;
+      // 무한 루프 방지: 사용 가능한 모든 이미지를 시도했으면 중복 허용
+      if (attempts > allIndices.length * 2) {
+        break;
+      }
+    } while (usedUrls.has(url));
+    
+    usedUrls.add(url);
     
     const originalPrice = randomPrice(10000, 300000);
     const discountPercent = randomPrice(15, 60);
@@ -115,13 +92,13 @@ function generateProducts(category: string, count: number): Product[] {
     const productId = `${category.toLowerCase().replace(/\s+/g, '-')}-${i + 1}`;
     products.push({
       id: productId,
-      name,
+      name: title, // imageUtils의 타이틀 직접 사용
       originalPrice,
       salePrice,
       discountPercent,
       category,
       isNew: Math.random() > 0.7, // 30% 확률로 New
-      imageUrl: getProductImageUrl(category, productId, name), // 이미지 URL 추가 (상품명으로 매칭)
+      imageUrl: url, // imageUtils의 URL 직접 사용
     });
   }
   
@@ -130,7 +107,6 @@ function generateProducts(category: string, count: number): Product[] {
 
 // 카테고리별 샘플 상품 데이터 (10~18개 랜덤)
 export const categoryProducts: Record<string, Product[]> = {
-  '구룡포과메기': generateProducts('구룡포과메기', 15),
   '겨울세일품목': generateProducts('겨울세일품목', 12),
   '대게/홍게': generateProducts('대게/홍게', 18),
   '수산물': generateProducts('수산물', 16),
@@ -138,8 +114,6 @@ export const categoryProducts: Record<string, Product[]> = {
   '건어물': generateProducts('건어물', 13),
   '문어/낙지/쭈꾸미': generateProducts('문어/낙지/쭈꾸미', 17),
   '명절 선물세트': generateProducts('명절 선물세트', 11),
-  '제철농산물': generateProducts('제철농산물', 18),
-  '한우/한돈': generateProducts('한우/한돈', 15),
 };
 
 // 모든 상품 가져오기

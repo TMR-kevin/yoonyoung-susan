@@ -40,7 +40,6 @@ export default function Header({ onCategorySelect }: HeaderProps) {
   };
 
   const categories = [
-    '구룡포과메기',
     '겨울세일품목',
     '대게/홍게',
     '수산물',
@@ -48,8 +47,6 @@ export default function Header({ onCategorySelect }: HeaderProps) {
     '건어물',
     '문어/낙지/쭈꾸미',
     '명절 선물세트',
-    '제철농산물',
-    '한우/한돈',
   ];
 
   return (
