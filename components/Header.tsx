@@ -42,7 +42,7 @@ export default function Header({ onCategorySelect }: HeaderProps) {
   const categories = [
     '구룡포과메기',
     '겨울세일품목',
-    '밍크고래/대게/홍게',
+    '대게/홍게',
     '수산물',
     '활어회/물회/막회',
     '건어물',

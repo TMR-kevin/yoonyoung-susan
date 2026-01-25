@@ -6,165 +6,213 @@ import Footer from '@/components/Footer';
 import ProductSection from '@/components/ProductSection';
 import ProductDetail from '@/components/ProductDetail';
 import { categoryProducts, Product } from '@/lib/products';
-import { getProductImageUrl } from '@/lib/imageUtils';
+import { getProductImageAndTitle } from '@/lib/imageUtils';
 
-// 샘플 상품 데이터
+// 샘플 상품 데이터 (이미지 인덱스 직접 지정하여 이미지와 타이틀 매칭)
 const todayProducts: Product[] = [
-  {
-    id: '1',
-    name: '국내산 손질 명품 새조개 200g(14~18미내외)',
-    originalPrice: 52000,
-    salePrice: 31900,
-    discountPercent: 39,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '1'),
-  },
-  {
-    id: '2',
-    name: '홍게 다리만 1kg(100개내외)',
-    originalPrice: 20000,
-    salePrice: 12900,
-    discountPercent: 36,
-    category: '밍크고래/대게/홍게',
-    imageUrl: getProductImageUrl('밍크고래/대게/홍게', '2'),
-  },
-  {
-    id: '3',
-    name: '완도 왕바지락1kg(50미내외)',
-    originalPrice: 23000,
-    salePrice: 8900,
-    discountPercent: 61,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '3'),
-  },
-  {
-    id: '4',
-    name: '활 러시아 대게 2kg/3kg - 절지',
-    originalPrice: 200000,
-    salePrice: 130000,
-    discountPercent: 35,
-    category: '밍크고래/대게/홍게',
-    imageUrl: getProductImageUrl('밍크고래/대게/홍게', '4'),
-  },
-  {
-    id: '5',
-    name: '통영생굴(깐굴) / 매생이200g',
-    originalPrice: 27000,
-    salePrice: 10900,
-    discountPercent: 60,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '5'),
-  },
-  {
-    id: '6',
-    name: '자연산 쥐치회1kg(실중량350g내외)+초장+와사비',
-    originalPrice: 38000,
-    salePrice: 30000,
-    discountPercent: 21,
-    category: '활어회/물회/막회',
-    imageUrl: getProductImageUrl('활어회/물회/막회', '6'),
-  },
-  {
-    id: '7',
-    name: '남해안 대왕 새꼬막 1kg(55미내외)',
-    originalPrice: 25000,
-    salePrice: 11900,
-    discountPercent: 52,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '7'),
-  },
-  {
-    id: '8',
-    name: '대방어 1마리 10~13kg내외크기 통마리/필렛/분할',
-    originalPrice: 700000,
-    salePrice: 500000,
-    discountPercent: 29,
-    category: '활어회/물회/막회',
-    imageUrl: getProductImageUrl('활어회/물회/막회', '8'),
-  },
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '1', undefined, 1); // 국내산 손질 새조개 200g
+    return {
+      id: '1',
+      name: title,
+      originalPrice: 52000,
+      salePrice: 31900,
+      discountPercent: 39,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('대게/홍게', '2', undefined, 0); // 홍게 다리 1kg
+    return {
+      id: '2',
+      name: title,
+      originalPrice: 20000,
+      salePrice: 12900,
+      discountPercent: 36,
+      category: '대게/홍게',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '3', undefined, 2); // 완도 왕바지락 1kg
+    return {
+      id: '3',
+      name: title,
+      originalPrice: 23000,
+      salePrice: 8900,
+      discountPercent: 61,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('대게/홍게', '4', undefined, 4); // 대방어 통마리 1마리
+    return {
+      id: '4',
+      name: title,
+      originalPrice: 200000,
+      salePrice: 130000,
+      discountPercent: 35,
+      category: '대게/홍게',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '5', undefined, 7); // 통영생굴 깐굴 매생이 세트
+    return {
+      id: '5',
+      name: title,
+      originalPrice: 27000,
+      salePrice: 10900,
+      discountPercent: 60,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '6', undefined, 3); // 자연산 쥐치회 1kg
+    return {
+      id: '6',
+      name: title,
+      originalPrice: 38000,
+      salePrice: 30000,
+      discountPercent: 21,
+      category: '활어회/물회/막회',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '7', undefined, 6); // 남해안 대왕 새꼬막 1kg
+    return {
+      id: '7',
+      name: title,
+      originalPrice: 25000,
+      salePrice: 11900,
+      discountPercent: 52,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '8', undefined, 4); // 대방어 통마리 1마리
+    return {
+      id: '8',
+      name: title,
+      originalPrice: 700000,
+      salePrice: 500000,
+      discountPercent: 29,
+      category: '활어회/물회/막회',
+      imageUrl: url,
+    };
+  })(),
 ];
 
 const recommendedProducts: Product[] = [
-  {
-    id: '9',
-    name: '최상급 횟감 생물한치 1kg 15미내외',
-    originalPrice: 45000,
-    salePrice: 23900,
-    discountPercent: 47,
-    isNew: true,
-    category: '활어회/물회/막회',
-    imageUrl: getProductImageUrl('활어회/물회/막회', '9'),
-  },
-  {
-    id: '10',
-    name: '낚시바리 제주 손질 갈치3마리 (1마리당 500g내외 크기)',
-    originalPrice: 80000,
-    salePrice: 60000,
-    discountPercent: 25,
-    isNew: true,
-    category: '활어회/물회/막회',
-    imageUrl: getProductImageUrl('활어회/물회/막회', '10'),
-  },
-  {
-    id: '11',
-    name: '목포 활 병어 1kg(8미내외)',
-    originalPrice: 18000,
-    salePrice: 7900,
-    discountPercent: 56,
-    isNew: true,
-    category: '활어회/물회/막회',
-    imageUrl: getProductImageUrl('활어회/물회/막회', '11'),
-  },
-  {
-    id: '12',
-    name: '국내산 특대 갑오징어 1kg(2~4마리)',
-    originalPrice: 22000,
-    salePrice: 16900,
-    discountPercent: 23,
-    isNew: true,
-    category: '문어/낙지/쭈꾸미',
-    imageUrl: getProductImageUrl('문어/낙지/쭈꾸미', '12'),
-  },
-  {
-    id: '13',
-    name: '남해안 활 깐멍게 500g',
-    originalPrice: 25000,
-    salePrice: 14900,
-    discountPercent: 40,
-    isNew: true,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '13'),
-  },
-  {
-    id: '14',
-    name: '피홍합 ★무료배송★',
-    originalPrice: 20000,
-    salePrice: 12000,
-    discountPercent: 40,
-    isNew: true,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '14'),
-  },
-  {
-    id: '15',
-    name: '물미역 1kg내외',
-    originalPrice: 14000,
-    salePrice: 10000,
-    discountPercent: 29,
-    isNew: true,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '15'),
-  },
-  {
-    id: '16',
-    name: '여수 석화굴(각굴)',
-    originalPrice: 27000,
-    salePrice: 17900,
-    discountPercent: 34,
-    isNew: true,
-    category: '수산물',
-    imageUrl: getProductImageUrl('수산물', '16'),
-  },
+  (() => {
+    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '9', undefined, 42); // 반건조 한치 500g
+    return {
+      id: '9',
+      name: title,
+      originalPrice: 45000,
+      salePrice: 23900,
+      discountPercent: 47,
+      isNew: true,
+      category: '활어회/물회/막회',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '10', undefined, 5); // 제주 손질 갈치 3마리
+    return {
+      id: '10',
+      name: title,
+      originalPrice: 80000,
+      salePrice: 60000,
+      discountPercent: 25,
+      isNew: true,
+      category: '활어회/물회/막회',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '11', undefined, 11); // 목포 활 병어 1kg
+    return {
+      id: '11',
+      name: title,
+      originalPrice: 18000,
+      salePrice: 7900,
+      discountPercent: 56,
+      isNew: true,
+      category: '활어회/물회/막회',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('문어/낙지/쭈꾸미', '12', undefined, 22); // 손질오징어 특대사이즈
+    return {
+      id: '12',
+      name: title,
+      originalPrice: 22000,
+      salePrice: 16900,
+      discountPercent: 23,
+      isNew: true,
+      category: '문어/낙지/쭈꾸미',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '13', undefined, 9); // 국내산 홍가리비
+    return {
+      id: '13',
+      name: title,
+      originalPrice: 25000,
+      salePrice: 14900,
+      discountPercent: 40,
+      isNew: true,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '14', undefined, 16); // 피홍합 무료배송
+    return {
+      id: '14',
+      name: title,
+      originalPrice: 20000,
+      salePrice: 12000,
+      discountPercent: 40,
+      isNew: true,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '15', undefined, 17); // 물미역 1kg
+    return {
+      id: '15',
+      name: title,
+      originalPrice: 14000,
+      salePrice: 10000,
+      discountPercent: 29,
+      isNew: true,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('수산물', '16', undefined, 12); // 국내산 손질 전복
+    return {
+      id: '16',
+      name: title,
+      originalPrice: 27000,
+      salePrice: 17900,
+      discountPercent: 34,
+      isNew: true,
+      category: '수산물',
+      imageUrl: url,
+    };
+  })(),
 ];
 
 export default function Home() {

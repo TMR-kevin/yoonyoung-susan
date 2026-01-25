@@ -37,12 +37,13 @@ const productTemplates: Record<string, string[]> = {
     '겨울 할인 대게 세트', '겨울 특가 홍게 세트', '겨울 한정 수산물 세트', '겨울 특선 선물세트',
     '겨울 시즌 프리미엄 세트', '겨울 특가 가정용 세트'
   ],
-  '밍크고래/대게/홍게': [
-    '러시아 대게', '홍게 다리만', '밍크고래 살코기', '대게 통마리',
-    '홍게 통마리', '대게 다리', '홍게 몸통', '밍크고래 회',
-    '대게 세트', '홍게 세트', '밍크고래 통마리', '대게 특대',
-    '홍게 특대', '밍크고래 특선', '대게 프리미엄', '홍게 프리미엄',
-    '밍크고래 고급', '대게 한정'
+  '대게/홍게': [
+    '러시아 대게', '홍게 다리만', '대게 통마리',
+    '홍게 통마리', '대게 다리', '홍게 몸통',
+    '대게 세트', '홍게 세트', '대게 특대',
+    '홍게 특대', '대게 프리미엄', '홍게 프리미엄',
+    '대게 한정', '홍게 한정', '대게 고급',
+    '홍게 고급', '대게 특선', '홍게 특선'
   ],
   '수산물': [
     '국내산 손질 새조개', '완도 왕바지락', '통영생굴(깐굴)', '남해안 대왕 새꼬막',
@@ -120,7 +121,7 @@ function generateProducts(category: string, count: number): Product[] {
       discountPercent,
       category,
       isNew: Math.random() > 0.7, // 30% 확률로 New
-      imageUrl: getProductImageUrl(category, productId), // 이미지 URL 추가
+      imageUrl: getProductImageUrl(category, productId, name), // 이미지 URL 추가 (상품명으로 매칭)
     });
   }
   
@@ -131,7 +132,7 @@ function generateProducts(category: string, count: number): Product[] {
 export const categoryProducts: Record<string, Product[]> = {
   '구룡포과메기': generateProducts('구룡포과메기', 15),
   '겨울세일품목': generateProducts('겨울세일품목', 12),
-  '밍크고래/대게/홍게': generateProducts('밍크고래/대게/홍게', 18),
+  '대게/홍게': generateProducts('대게/홍게', 18),
   '수산물': generateProducts('수산물', 16),
   '활어회/물회/막회': generateProducts('활어회/물회/막회', 14),
   '건어물': generateProducts('건어물', 13),
