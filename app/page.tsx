@@ -11,86 +11,86 @@ import { getProductImageAndTitle } from '@/lib/imageUtils';
 // 샘플 상품 데이터 (이미지 인덱스 직접 지정하여 이미지와 타이틀 매칭)
 const todayProducts: Product[] = [
   (() => {
-    const { url, title } = getProductImageAndTitle('수산물', '1', undefined, 1); // 국내산 손질 새조개 200g
+    const { url, title } = getProductImageAndTitle('냉동식품', '1', undefined, 51); // 참다랑어 참치 뽈살 뱃살
     return {
       id: '1',
+      name: title,
+      originalPrice: 89000,
+      salePrice: 49900,
+      discountPercent: 44,
+      category: '냉동식품',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('냉동식품', '2', undefined, 52); // 직접 우린 방어 추어탕
+    return {
+      id: '2',
+      name: title,
+      originalPrice: 35000,
+      salePrice: 19900,
+      discountPercent: 43,
+      category: '냉동식품',
+      imageUrl: url,
+    };
+  })(),
+  (() => {
+    const { url, title } = getProductImageAndTitle('냉동식품', '3', undefined, 19); // 국내산 손질 순살갈치 5팩
+    return {
+      id: '3',
       name: title,
       originalPrice: 52000,
       salePrice: 31900,
       discountPercent: 39,
-      category: '수산물',
+      category: '냉동식품',
       imageUrl: url,
     };
   })(),
   (() => {
-    const { url, title } = getProductImageAndTitle('대게/홍게', '2', undefined, 0); // 홍게 다리 1kg
+    const { url, title } = getProductImageAndTitle('냉동식품', '4', undefined, 59); // 민물장어 1kg 초벌구이
     return {
-      id: '2',
+      id: '4',
       name: title,
-      originalPrice: 20000,
-      salePrice: 12900,
-      discountPercent: 36,
-      category: '대게/홍게',
+      originalPrice: 65000,
+      salePrice: 39900,
+      discountPercent: 39,
+      category: '냉동식품',
       imageUrl: url,
     };
   })(),
   (() => {
-    const { url, title } = getProductImageAndTitle('수산물', '3', undefined, 2); // 완도 왕바지락 1kg
-    return {
-      id: '3',
-      name: title,
-      originalPrice: 23000,
-      salePrice: 8900,
-      discountPercent: 61,
-      category: '수산물',
-      imageUrl: url,
-    };
-  })(),
-  (() => {
-    const { url, title } = getProductImageAndTitle('수산물', '5', undefined, 7); // 통영생굴 깐굴 매생이 세트
+    const { url, title } = getProductImageAndTitle('냉동식품', '5', undefined, 48); // 자연산 깐중하새우 세트
     return {
       id: '5',
       name: title,
-      originalPrice: 27000,
-      salePrice: 10900,
-      discountPercent: 60,
-      category: '수산물',
+      originalPrice: 45000,
+      salePrice: 27900,
+      discountPercent: 38,
+      category: '냉동식품',
       imageUrl: url,
     };
   })(),
   (() => {
-    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '6', undefined, 3); // 자연산 쥐치회 1kg
+    const { url, title } = getProductImageAndTitle('냉동식품', '6', undefined, 8); // 멸치회 급냉 세트
     return {
       id: '6',
       name: title,
       originalPrice: 38000,
-      salePrice: 30000,
-      discountPercent: 21,
-      category: '활어회/물회/막회',
+      salePrice: 23900,
+      discountPercent: 37,
+      category: '냉동식품',
       imageUrl: url,
     };
   })(),
   (() => {
-    const { url, title } = getProductImageAndTitle('수산물', '7', undefined, 6); // 남해안 대왕 새꼬막 1kg
+    const { url, title } = getProductImageAndTitle('냉동식품', '7', undefined, 54); // 백고동 자숙후 순살 400g
     return {
       id: '7',
       name: title,
-      originalPrice: 25000,
-      salePrice: 11900,
-      discountPercent: 52,
-      category: '수산물',
-      imageUrl: url,
-    };
-  })(),
-  (() => {
-    const { url, title } = getProductImageAndTitle('활어회/물회/막회', '8', undefined, 4); // 대방어 통마리 1마리
-    return {
-      id: '8',
-      name: title,
-      originalPrice: 700000,
-      salePrice: 500000,
-      discountPercent: 29,
-      category: '활어회/물회/막회',
+      originalPrice: 28000,
+      salePrice: 17900,
+      discountPercent: 36,
+      category: '냉동식품',
       imageUrl: url,
     };
   })(),

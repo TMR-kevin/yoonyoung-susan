@@ -40,6 +40,7 @@ export default function Header({ onCategorySelect }: HeaderProps) {
   };
 
   const categories = [
+    '냉동식품',
     '겨울세일품목',
     '대게/홍게',
     '수산물',
